@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodee.gdj58.online.mapper.TeacherMapper">
+	
+	<delete id="deleteTeacher"
+		parameterType="int">
+		DELETE
+		FROM Teacher
+		WHERE teacher_no = #{teacherNo}
+	</delete>
+	
+	<insert id="insertTeacher"
+		 parameterType="goodee.gdj58.online.vo.Teacher">
+		INSERT INTO Teacher (teacher_id, teacher_pw, teacher_name)
+		VALUES (#{teacherId}, PASSWORD(#{teacherPw}), #{teacherName})
+	</insert>
+
+	<select id = "selectTeacherList"
+		 resultType="goodee.gdj58.online.vo.Teacher"
+		 parameterType="java.util.Map">
+		 
+		SELECT
+			teacher_no teacherNo <!-- rs.getInt("teacher_no"), new Teacher().setTeacher_no() 컬럼명과 vo내 이름이 다르기때문에 AS 사용 -->
+			, teacher_id teacherId
+			, teacher_name teacherName
+		FROM
+			Teacher
+		ORDER BY teacher_no DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+</mapper>
